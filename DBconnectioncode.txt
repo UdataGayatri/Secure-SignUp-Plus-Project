@@ -1,0 +1,25 @@
+<?php
+	
+	$fullname=$_POST['fname1'];
+	$Email=$_POST['email1'];
+	$passwordds=$_POST['pass'];
+	$dateOfbirth=$_POST['date1'];
+	$genderr=$_POST['gender'];
+
+	$conn=new mysqli('localhost','root','','logindata');
+	if($conn->connect_error){
+		die('Connection Failed : '.$conn->connect_error);
+	}else{   
+		       
+			$stmt=$conn->prepare("insert into signup(FullName,email,Password,DOB,Gender)
+			values(?,?,?,?,?)");
+			$stmt->bind_param("sssss", $fullname , $Email , $passwordds , $dateOfbirth , $genderr);
+			$stmt->execute();
+	    
+			$stmt->close();
+			$conn->close();
+	}
+	header('Location: signup.html');
+    exit;
+
+?>
